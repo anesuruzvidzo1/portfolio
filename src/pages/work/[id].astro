@@ -4,6 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import { projects } from "../../data/projects";
 import { screenshots } from "../../data/screenshots";
 import { galleries } from "../../data/galleries";
+import { detailShots } from "../../data/detailShots";
 
 // One page per project that has case-study content.
 export function getStaticPaths() {
@@ -21,6 +22,7 @@ const { title, capability, energy, metric, description, stack, live, github } =
 const caseStudy = project.caseStudy!;
 const shot = screenshots[project.id];
 const gallery = galleries[project.id];
+const detail = detailShots[project.id];
 ---
 
 <Layout title={`${title} — Anesu Ruzvidzo`} description={description}>
@@ -118,6 +120,22 @@ const gallery = galleries[project.id];
           }
         </ul>
       </section>
+
+      {
+        detail && (
+          <figure class="flex flex-col gap-2">
+            <Image
+              src={detail.src}
+              alt={`${title} detail`}
+              width={1400}
+              class="w-full rounded-xl border border-line"
+            />
+            <figcaption class="font-mono text-xs text-faint">
+              {detail.caption}
+            </figcaption>
+          </figure>
+        )
+      }
 
       <section class="flex flex-col gap-3">
         <h2 class="font-mono text-xs uppercase tracking-wide text-faint">
