@@ -1,0 +1,101 @@
+---
+// Grouped skills: shows the Applied AI three-circle at a glance
+// (AI, ML, full-stack) and feeds recruiter/ATS keyword scans.
+const skills = [
+  { group: "Languages", items: ["TypeScript", "JavaScript", "Python", "Java", "SQL"] },
+  {
+    group: "AI & LLM",
+    items: [
+      "Anthropic Claude API",
+      "Tool use & agents",
+      "RAG",
+      "pgvector",
+      "Cross encoder reranking",
+    ],
+  },
+  {
+    group: "Machine Learning",
+    items: [
+      "scikit-learn",
+      "Isolation Forest",
+      "Anomaly detection",
+      "OR-Tools optimization",
+    ],
+  },
+  {
+    group: "Full-Stack",
+    items: [
+      "Next.js",
+      "React",
+      "FastAPI",
+      "Node.js",
+      "PostgreSQL",
+      "Supabase",
+      "Redis",
+    ],
+  },
+  {
+    group: "Data & Infra",
+    items: ["ETL pipelines", "Geospatial / Leaflet", "Docker", "Vercel", "Railway"],
+  },
+];
+---
+
+<section id="about" class="mx-auto max-w-5xl scroll-mt-20 px-6 py-24">
+  <div class="grid gap-12 md:grid-cols-[1.3fr_1fr]">
+    <!-- Bio -->
+    <div class="flex flex-col gap-5">
+      <p class="font-mono text-xs uppercase tracking-wide text-accent">About</p>
+      <h2 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+        I build AI that has to work in production
+      </h2>
+
+      <p class="leading-relaxed text-muted">
+        I'm Anesu, an applied AI and full-stack engineer who finished a computer
+        science degree at Cleveland State University in 2026. I approach building
+        the way a founder would: start from the problem and what it costs
+        someone, then ship the smallest real thing that actually solves it.
+      </p>
+      <p class="leading-relaxed text-muted">
+        Most of what I build sits on the raw Anthropic SDK with no framework in
+        between, because I want to know exactly what the model is doing and what
+        each call costs. I tend to build the whole stack myself: the data and
+        retrieval underneath, the model and agent logic in the middle, and the
+        interface someone actually clicks. Most of what I build I take from idea
+        to production on my own, and it all ships live.
+      </p>
+      <p class="leading-relaxed text-muted">
+        Lately I've been going deeper on the machine learning side: anomaly
+        detection over messy public data, constraint optimization, and
+        tightening retrieval so answers stay grounded in real sources. The part
+        I care about most is where a model stops being a demo and has to hold up
+        under real use.
+      </p>
+      <p class="leading-relaxed text-ink">
+        Based in the US and open to roles across the US and Canada, remote or on
+        site.
+      </p>
+    </div>
+
+    <!-- Skills -->
+    <div class="flex flex-col gap-6">
+      <p class="font-mono text-xs uppercase tracking-wide text-faint">
+        What I work with
+      </p>
+      {
+        skills.map((section) => (
+          <div class="flex flex-col gap-2">
+            <p class="text-sm font-medium text-ink">{section.group}</p>
+            <ul class="flex flex-wrap gap-1.5">
+              {section.items.map((item) => (
+                <li class="rounded border border-line px-2 py-0.5 font-mono text-[11px] text-muted">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

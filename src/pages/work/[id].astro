@@ -1,0 +1,165 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../../layouts/Layout.astro";
+import { projects } from "../../data/projects";
+import { screenshots } from "../../data/screenshots";
+import { galleries } from "../../data/galleries";
+
+// One page per project that has case-study content.
+export function getStaticPaths() {
+  return projects
+    .filter((project) => project.caseStudy)
+    .map((project) => ({
+      params: { id: project.id },
+      props: { project },
+    }));
+}
+
+const { project } = Astro.props;
+const { title, capability, energy, metric, description, stack, live, github } =
+  project;
+const caseStudy = project.caseStudy!;
+const shot = screenshots[project.id];
+const gallery = galleries[project.id];
+---
+
+<Layout title={`${title} — Anesu Ruzvidzo`} description={description}>
+  <article class="mx-auto max-w-3xl px-6 py-16">
+    <a
+      href="/#work"
+      class="font-mono text-sm text-muted transition-colors hover:text-ink"
+    >
+      ← Back to work
+    </a>
+
+    <!-- Header -->
+    <header class="mt-8 flex flex-col gap-4">
+      <div class="flex items-center gap-3">
+        <p class="font-mono text-xs uppercase tracking-wide text-accent">
+          {capability}
+        </p>
+        {
+          energy && (
+            <span class="rounded-full border border-line px-2.5 py-0.5 font-mono text-[11px] text-muted">
+              Energy
+            </span>
+          )
+        }
+      </div>
+      <h1 class="text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+        {title}
+      </h1>
+      <p class="text-lg text-muted">{description}</p>
+
+      <div class="flex flex-wrap items-center gap-4 pt-1">
+        <a
+          href={live}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-accent-ink transition-opacity hover:opacity-90"
+        >
+          Live ↗
+        </a>
+        <a
+          href={github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm text-muted transition-colors hover:text-ink"
+        >
+          GitHub ↗
+        </a>
+      </div>
+    </header>
+
+    <!-- Screenshot: real image when available, metric placeholder otherwise -->
+    <div
+      class="mt-10 flex aspect-video items-center justify-center overflow-hidden rounded-xl border border-line bg-gradient-to-br from-surface-hover to-canvas"
+    >
+      {
+        shot ? (
+          <Image
+            src={shot.src}
+            alt={`${title} screenshot`}
+            width={1400}
+            class:list={[
+              "h-full w-full object-cover",
+              shot.focus === "center" ? "object-center" : "object-top",
+            ]}
+          />
+        ) : (
+          <span class="px-4 text-center font-mono text-3xl font-medium text-accent">
+            {metric}
+          </span>
+        )
+      }
+    </div>
+
+    <!-- Body -->
+    <div class="mt-12 flex flex-col gap-10">
+      <section class="flex flex-col gap-3">
+        <h2 class="font-mono text-xs uppercase tracking-wide text-faint">
+          The problem
+        </h2>
+        <p class="leading-relaxed text-muted">{caseStudy.problem}</p>
+      </section>
+
+      <section class="flex flex-col gap-3">
+        <h2 class="font-mono text-xs uppercase tracking-wide text-faint">
+          What I built
+        </h2>
+        <ul class="flex flex-col gap-3">
+          {
+            caseStudy.build.map((item) => (
+              <li class="flex gap-3 leading-relaxed text-muted">
+                <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="flex flex-col gap-3">
+        <h2 class="font-mono text-xs uppercase tracking-wide text-faint">
+          The outcome
+        </h2>
+        <p class="leading-relaxed text-muted">{caseStudy.outcome}</p>
+      </section>
+
+      {
+        gallery && (
+          <section class="flex flex-col gap-3">
+            <h2 class="font-mono text-xs uppercase tracking-wide text-faint">
+              The data story
+            </h2>
+            <div class="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2">
+              {gallery.map((img, i) => (
+                <Image
+                  src={img}
+                  alt={`${title} slide ${i + 1}`}
+                  width={640}
+                  class="w-72 shrink-0 snap-center rounded-xl border border-line sm:w-80"
+                />
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      <section class="flex flex-col gap-3">
+        <h2 class="font-mono text-xs uppercase tracking-wide text-faint">
+          Stack
+        </h2>
+        <ul class="flex flex-wrap gap-1.5">
+          {
+            stack.map((tech) => (
+              <li class="rounded border border-line px-2 py-0.5 font-mono text-[11px] text-muted">
+                {tech}
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </article>
+</Layout>

@@ -1,0 +1,114 @@
+---
+import { Image } from "astro:assets";
+import type { Project } from "../data/projects";
+import { screenshots } from "../data/screenshots";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const {
+  id,
+  title,
+  capability,
+  energy,
+  metric,
+  description,
+  stack,
+  live,
+  github,
+  caseStudy,
+} = project;
+
+const shot = screenshots[id];
+---
+
+<article
+  data-capability={capability}
+  data-energy={String(energy)}
+  class="project-card group flex flex-col overflow-hidden rounded-xl border border-line bg-surface transition-colors hover:border-accent/40"
+>
+  <!-- Visual zone: real screenshot when available, metric placeholder otherwise -->
+  <div
+    class="relative flex aspect-video items-center justify-center overflow-hidden border-b border-line bg-gradient-to-br from-surface-hover to-canvas"
+  >
+    {
+      shot ? (
+        <Image
+          src={shot.src}
+          alt={`${title} screenshot`}
+          width={800}
+          class:list={[
+            "h-full w-full object-cover",
+            shot.focus === "center" ? "object-center" : "object-top",
+          ]}
+        />
+      ) : (
+        <span class="px-4 text-center font-mono text-2xl font-medium text-accent">
+          {metric}
+        </span>
+      )
+    }
+    {
+      energy && (
+        <span class="absolute right-3 top-3 rounded-full border border-line bg-canvas/70 px-2.5 py-1 font-mono text-[11px] text-muted backdrop-blur">
+          Energy
+        </span>
+      )
+    }
+  </div>
+
+  <!-- Body -->
+  <div class="flex flex-1 flex-col gap-3 p-5">
+    <p class="font-mono text-xs uppercase tracking-wide text-faint">
+      {capability}
+    </p>
+    <h3 class="text-lg font-medium text-ink">{title}</h3>
+    <p class="flex-1 text-sm leading-relaxed text-muted">{description}</p>
+
+    <ul class="flex flex-wrap gap-1.5 pt-1">
+      {
+        stack.map((tech) => (
+          <li class="rounded border border-line px-1.5 py-0.5 font-mono text-[11px] text-faint">
+            {tech}
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex items-center gap-4 pt-2 text-sm">
+      {
+        caseStudy && (
+          <a
+            href={`/work/${id}`}
+            class="font-medium text-accent transition-opacity hover:opacity-80"
+          >
+            Case study →
+          </a>
+        )
+      }
+      <a
+        href={live}
+        target="_blank"
+        rel="noopener noreferrer"
+        class:list={[
+          "transition-colors",
+          caseStudy
+            ? "text-muted hover:text-ink"
+            : "font-medium text-accent hover:opacity-80",
+        ]}
+      >
+        Live ↗
+      </a>
+      <a
+        href={github}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-muted transition-colors hover:text-ink"
+      >
+        GitHub
+      </a>
+    </div>
+  </div>
+</article>

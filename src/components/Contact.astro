@@ -1,0 +1,43 @@
+---
+const email = "anesuruzvidzo1@gmail.com";
+const linkedin = "https://www.linkedin.com/in/anesu-ruzvidzo-428193294";
+const github = "https://github.com/anesuruzvidzo1";
+---
+
+<section id="contact" class="scroll-mt-20 border-t border-line">
+  <div class="mx-auto flex max-w-5xl flex-col items-start gap-6 px-6 py-24">
+    <p class="font-mono text-xs uppercase tracking-wide text-accent">Contact</p>
+    <h2 class="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+      Let's talk
+    </h2>
+    <p class="max-w-xl text-muted">
+      Whether it's a role, a project, or a question, my inbox is open. Email is
+      the fastest way to reach me.
+    </p>
+
+    <div class="flex flex-wrap items-center gap-4 pt-2">
+      <a
+        href={`mailto:${email}`}
+        class="rounded-lg bg-accent px-5 py-2.5 font-medium text-accent-ink transition-opacity hover:opacity-90"
+      >
+        Email me
+      </a>
+      <a
+        href={linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-muted transition-colors hover:text-ink"
+      >
+        LinkedIn ↗
+      </a>
+      <a
+        href={github}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-muted transition-colors hover:text-ink"
+      >
+        GitHub ↗
+      </a>
+    </div>
+  </div>
+</section>

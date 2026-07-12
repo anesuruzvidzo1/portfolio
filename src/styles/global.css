@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+/* Design tokens. Change a value here and it updates everywhere. */
+@theme {
+  /* Surfaces, darkest to lightest. Built from Blue Whale #03363D. */
+  --color-canvas: #04191d; /* page background: Blue Whale, darkened to near-black */
+  --color-surface: #03363d; /* cards, raised panels: Blue Whale */
+  --color-surface-hover: #0a454e; /* card hover state */
+  --color-line: #14484f; /* teal hairline borders */
+
+  /* Text, cool-cast to harmonize with the teal */
+  --color-ink: #eaf3f1; /* primary text, headings */
+  --color-muted: #9bb4b2; /* secondary text */
+  --color-faint: #6e8886; /* labels, timestamps */
+
+  /* One restrained accent: Jet Stream. Swap this single value to recolor the site. */
+  --color-accent: #bdd9d7;
+  --color-accent-ink: #03363d; /* dark teal text on top of the light accent */
+
+  /* Fonts */
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+}
